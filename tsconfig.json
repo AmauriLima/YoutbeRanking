@@ -19,6 +19,7 @@
       "@assets/*": ["./src/assets/*"],
       "@services/*": ["./src/services/*"],
       "@hooks/*": ["./src/hooks/*"],
+      "@contexts/*": ["./src/contexts/*"],
       "@pages/*": ["./src/pages/*"],
       "@components/*": ["./src/components/*"],
     },

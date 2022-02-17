@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { PageLayout } from '@components/PageLayout';
 
 const Home: NextPage = () => (
-  <PageLayout pageTitle="YtRanking - AlternativaSoftware">
+  <PageLayout pageTitle="VideoList - AlternativaSoftware">
     Pagina Principal
   </PageLayout>
 );

@@ -1,17 +1,18 @@
-import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { FiX } from 'react-icons/fi';
+
+import { useAuth } from '@hooks/useAuth';
 
 import { Button } from './styles';
 
 export function SignInButton() {
-  const [isUserLoggedIn] = useState<boolean>(false);
+  const { user, signInWithGoogle, signOut } = useAuth();
 
   return (
-    <Button type="button">
+    <Button type="button" onClick={!user ? signInWithGoogle : signOut}>
       <FcGoogle />
-      {isUserLoggedIn ? 'Amauri Lima' : 'Entrar com google'}
-      <FiX className="closeIcon" color="737380" />
+      {user ? user.name : 'Entrar com google'}
+      {user && <FiX className="closeIcon" color="737380" />}
     </Button>
   );
 }

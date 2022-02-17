@@ -42,6 +42,7 @@
           "/^@assets/",
           "/^@services/",
           "/^@hooks/",
+          "/^@contexts/",
           "/^@pages/",
           "/^@components/",
           ["parent", "sibling", "index"]
