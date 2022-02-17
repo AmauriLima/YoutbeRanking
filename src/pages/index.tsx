@@ -1,12 +1,11 @@
 import type { NextPage } from 'next';
 
-import { PageTitle } from '@components/PageLayout';
+import { PageLayout } from '@components/PageLayout';
 
 const Home: NextPage = () => (
-  <>
-    <PageTitle>Youtube Ranking - Alternativa Software</PageTitle>
-    <h1>Oi</h1>
-  </>
+  <PageLayout pageTitle="YtRanking - AlternativaSoftware">
+    Pagina Principal
+  </PageLayout>
 );
 
 export default Home;

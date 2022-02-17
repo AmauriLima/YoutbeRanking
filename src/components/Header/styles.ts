@@ -46,7 +46,7 @@ export const Content = styled.div`
         position: absolute;
         bottom: 1px;
         left: 0;
-        background: ${({ theme }) => theme.colors.red[500]};
+        background: ${({ theme }) => theme.colors.primary[500]};
       }
     }
 
