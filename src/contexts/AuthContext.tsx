@@ -2,13 +2,9 @@ import {
   createContext, ReactNode, useCallback, useEffect, useState,
 } from 'react';
 
-import { firebase, auth } from '@services/firebase';
-
-type User = {
-  id: string;
-  name: string;
-  avatar: string;
-}
+import AuthService from '@services/AuthService';
+import { User } from '@services/AuthService/DTO';
+import { auth } from '@services/utils/firebaseClient';
 
 type AuthContextType = {
   user: User | undefined;
@@ -47,20 +43,9 @@ function AuthProvider({ children }: AuthContextProviderProps) {
     };
   }, []);
 
-  const signOut = useCallback(async () => {
-    try {
-      await firebase.auth().signOut();
-      setUser(undefined);
-    } catch (err) {
-      // console.log(err);
-    }
-  }, []);
-
   const signInWithGoogle = useCallback(async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-
     try {
-      const response = await auth.signInWithPopup(provider);
+      const response = await AuthService.signInWithGoogle();
       if (response.user) {
         const { displayName, photoURL, uid } = response.user;
 
@@ -74,6 +59,15 @@ function AuthProvider({ children }: AuthContextProviderProps) {
           avatar: photoURL,
         });
       }
+    } catch (err) {
+      // console.log(err);
+    }
+  }, []);
+
+  const signOut = useCallback(async () => {
+    try {
+      AuthService.signOut();
+      setUser(undefined);
     } catch (err) {
       // console.log(err);
     }
