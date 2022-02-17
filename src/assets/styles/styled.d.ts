@@ -13,6 +13,9 @@ declare module 'styled-components' {
       },
       primary: {
         500: string,
+      },
+      secondary: {
+        500: string,
       }
     }
   }

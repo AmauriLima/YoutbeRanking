@@ -13,5 +13,8 @@ export default {
     primary: {
       500: '#40CBF6',
     },
+    secondary: {
+      500: '#82c041',
+    },
   },
 } as DefaultTheme;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { NextPage } from 'next';
 import { validateEmailRegex } from 'src/utils/validateEmailRegex';
 
@@ -6,6 +7,7 @@ import { CreateUser } from '@services/AuthService/DTO';
 import { InputObjectProps } from '@hooks/DTO/useFormsDTO';
 import { useForms } from '@hooks/useForms';
 
+import { Form } from '@components/Form';
 import { PageLayout } from '@components/PageLayout';
 
 const SignIn: NextPage = () => {
@@ -33,7 +35,14 @@ const SignIn: NextPage = () => {
 
   return (
     <PageLayout pageTitle="ListVideo - Login">
-      {createInputs(['email', 'password'], fieldsObject)}
+      <Form
+        title="Fazer login"
+        label="Entrar"
+        secondaryLink={{ href: '/', label: 'Cadastre-se' }}
+        onConfirm={() => { }}
+      >
+        {createInputs(['email', 'password'], fieldsObject)}
+      </Form>
     </PageLayout>
   );
 };

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, css } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -35,5 +35,19 @@ export const GlobalStyle = createGlobalStyle`
   a {
     color: inherit;
     text-decoration: none;
+  }
+
+  .gradient {
+    background-image: linear-gradient(
+      45deg,
+      ${({ theme }) => css`
+        ${theme.colors.primary[500]},
+        ${theme.colors.secondary[500]}
+      `}
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
   }
 `;
