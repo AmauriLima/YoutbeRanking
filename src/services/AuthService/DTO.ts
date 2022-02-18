@@ -4,7 +4,14 @@ export type User = {
   avatar: string;
 }
 
-export type CreateUser = {
+export type UserLogin = {
   email: string;
   password: string;
+}
+
+export type CreateUser = {
+  email: string;
+  confirmEmail: string;
+  password: string;
+  confirmPassword: string;
 }

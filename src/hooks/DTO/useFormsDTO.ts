@@ -1,7 +1,7 @@
 export type FieldName<T> = keyof T & string;
 
 export type ExtraValidation = {
-  [field: string]: (value: string) => string
+  [field: string]: (value: string, validationName: string) => string
 };
 
 export type ValidateOptions = {

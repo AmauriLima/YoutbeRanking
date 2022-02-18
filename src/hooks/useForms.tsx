@@ -10,7 +10,11 @@ export function useForms<T>() {
   const [values, setValues] = useState<T>({} as T);
 
   const {
-    getErrorMessageByFieldName, handleRequiredFieldChange, handleExtraValidations, errors,
+    getErrorMessageByFieldName,
+    handleRequiredFieldChange,
+    handleExtraValidations,
+    errors,
+    clearErrors,
   } = useErrors<T>();
 
   function handleFieldsChange(validate: Partial<ValidateOptions> | undefined) {
@@ -68,11 +72,25 @@ export function useForms<T>() {
     };
   }
 
+  function compareFields(
+    field: FieldName<T>,
+    fieldToCompare: FieldName<T>,
+    errorMessage: string,
+  ) {
+    return (value: string, errorName: string) => {
+      if (value !== values[fieldToCompare] as unknown) {
+        return errorMessage;
+      }
+      clearErrors([{ field, errorName }, { field: fieldToCompare, errorName }]);
+    };
+  }
+
   return {
     values,
     errors,
     handleFieldsChange,
     createInputs,
     checkFieldPattern,
+    compareFields,
   };
 }

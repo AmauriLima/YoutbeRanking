@@ -2,7 +2,7 @@
 import { NextPage } from 'next';
 import { validateEmailRegex } from 'src/utils/validateEmailRegex';
 
-import { CreateUser } from '@services/AuthService/DTO';
+import { UserLogin } from '@services/AuthService/DTO';
 
 import { InputObjectProps } from '@hooks/DTO/useFormsDTO';
 import { useForms } from '@hooks/useForms';
@@ -11,7 +11,7 @@ import { Form } from '@components/Form';
 import { PageLayout } from '@components/PageLayout';
 
 const SignIn: NextPage = () => {
-  const { createInputs, checkFieldPattern } = useForms<CreateUser>();
+  const { createInputs, checkFieldPattern } = useForms<UserLogin>();
 
   const fieldsObject = {
     email: {
@@ -31,7 +31,7 @@ const SignIn: NextPage = () => {
         required: 'Senha é obrigatória',
       },
     },
-  } as InputObjectProps<CreateUser>;
+  } as InputObjectProps<UserLogin>;
 
   return (
     <PageLayout pageTitle="ListVideo - Login">

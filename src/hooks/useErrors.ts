@@ -1,25 +1,28 @@
+/* eslint-disable no-param-reassign */
 import { ChangeEvent, useState } from 'react';
 
-import { Error, Errors } from './DTO/useErrorsDTO';
+import { Error, FieldToClear } from './DTO/useErrorsDTO';
 import { ExtraValidation, FieldName } from './DTO/useFormsDTO';
 
 export function useErrors<T>() {
-  const [errors, setErrors] = useState<Errors<T>>({} as Errors<T>);
+  const [errors, setErrors] = useState<Error<T>[]>([]);
 
-  function setError(field: FieldName<T>, { message, errorName }: Error) {
-    setErrors((prevState) => ({ ...prevState, [field]: { message, errorName } }));
+  function setError({ field, message, errorName }: Error<T>) {
+    const errorAlreadyExists = errors?.find((error) => error.field === field
+      && error.errorName === errorName);
+
+    if (errorAlreadyExists) return;
+
+    setErrors((prevState) => [{ field, message, errorName }, ...prevState]);
   }
 
-  function removeError(fieldName: FieldName<T>) {
-    setErrors((prevstate) => {
-      const newErrorsObject = prevstate;
-      delete newErrorsObject[fieldName];
-      return newErrorsObject;
-    });
+  function removeError(fieldName: FieldName<T>, errorName: string) {
+    setErrors((prevState) => prevState
+      .filter((error) => !(error.errorName === errorName && error.field === fieldName)));
   }
 
   function getErrorMessageByFieldName(field: FieldName<T>) {
-    return errors[field]?.message;
+    return errors?.find((error) => error?.field === field)?.message;
   }
 
   function handleRequiredFieldChange(
@@ -28,9 +31,9 @@ export function useErrors<T>() {
     event: ChangeEvent<HTMLInputElement>,
   ) {
     if (!event.target.value) {
-      setError(name, { errorName: 'required', message: errorMessage });
+      setError({ field: name, errorName: 'required', message: errorMessage });
     } else {
-      removeError(name);
+      removeError(name, 'required');
     }
   }
 
@@ -42,13 +45,19 @@ export function useErrors<T>() {
     Object.keys(validations).forEach((validationName) => {
       if (!event.target.value) return;
 
-      const messageIfHasError = validations[validationName](event.target.value);
+      const messageIfHasError = validations[validationName](event.target.value, validationName);
 
       if (messageIfHasError) {
-        setError(name, { errorName: validationName, message: messageIfHasError });
+        setError({ field: name, errorName: validationName, message: messageIfHasError });
       } else {
-        removeError(name);
+        removeError(name, validationName);
       }
+    });
+  }
+
+  function clearErrors(fieldsToClear: FieldToClear<T>[]) {
+    fieldsToClear.forEach(({ field, errorName }) => {
+      removeError(field, errorName);
     });
   }
 
@@ -59,5 +68,6 @@ export function useErrors<T>() {
     getErrorMessageByFieldName,
     handleRequiredFieldChange,
     handleExtraValidations,
+    clearErrors,
   };
 }

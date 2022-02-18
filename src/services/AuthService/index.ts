@@ -1,5 +1,5 @@
 import { firebase, auth } from '../utils/firebaseClient';
-import { CreateUser } from './DTO';
+import { CreateUser, UserLogin } from './DTO';
 
 class AuthService {
   async signInWithGoogle() {
@@ -13,7 +13,7 @@ class AuthService {
     return user;
   }
 
-  async signInWithEmailAndPassword({ email, password }: CreateUser) {
+  async signInWithEmailAndPassword({ email, password }: UserLogin) {
     const { user } = await auth.signInWithEmailAndPassword(email, password);
     return user;
   }
